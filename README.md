@@ -1,59 +1,81 @@
-# 📦 Sistema de Inventario - API REST
-
-> Sistema profesional de gestión de inventario desarrollado con Spring Boot 3.5.5
+# 📦 Sistema de Inventario
 
 [![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Gradle](https://img.shields.io/badge/Gradle-8.5-blue.svg)](https://gradle.org/)
+[![H2 Database](https://img.shields.io/badge/H2-Database-yellow.svg)](https://www.h2database.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 🚀 Características
+Sistema profesional de gestión de inventario desarrollado con Spring Boot 3.5.5 - API REST completa con H2 Database
 
-- ✅ **API REST completa** con operaciones CRUD
-- ✅ **Base de datos H2** en memoria para desarrollo
-- ✅ **Búsqueda inteligente** de productos
-- ✅ **Alertas de stock bajo** automáticas
-- ✅ **Dashboard** con estadísticas en tiempo real
-- ✅ **Manejo de excepciones** global
-- ✅ **Validación de datos** con Bean Validation
-- ✅ **CORS habilitado** para integración con frontend
+## 🚀 Demo en Vivo
 
-## 🛠️ Tecnologías
+> 🔜 Próximamente disponible en Heroku/Railway
 
-- **Java 17**
-- **Spring Boot 3.5.5**
-- **Spring Data JPA**
-- **H2 Database**
-- **Gradle**
-- **Lombok** (opcional)
+## 📸 Screenshots
 
-## 📋 Prerrequisitos
+<div align="center">
+  <img src="screenshots/swagger-ui.png" alt="Swagger UI" width="45%">
+  <img src="screenshots/api-response.png" alt="API Response" width="45%">
+</div>
+
+## ✨ Características
+
+### 📊 Gestión de Inventario
+- **CRUD Completo** de productos con validaciones
+- **Control de Stock** en tiempo real
+- **Alertas Automáticas** cuando el stock está bajo
+- **Categorización** de productos
+
+### 📈 Dashboard Analítico
+- Métricas en tiempo real
+- Total de productos y categorías
+- Valor total del inventario
+- Productos con stock bajo
+
+### 🔧 Características Técnicas
+- **API RESTful** con 9 endpoints documentados
+- **Base de datos H2** embebida (desarrollo)
+- **Swagger UI** para documentación interactiva
+- **DTOs** para transferencia de datos
+- **Manejo de excepciones** centralizado
+- **Datos de prueba** automáticos
+
+## 🛠️ Tecnologías Utilizadas
+
+- **Backend Framework:** Spring Boot 3.5.5
+- **Lenguaje:** Java 17
+- **Base de Datos:** H2 (desarrollo) / PostgreSQL (producción ready)
+- **Build Tool:** Gradle 8.5
+- **Documentación API:** OpenAPI 3.0 (Swagger)
+- **Testing:** JUnit 5, Mockito
+
+## 📋 Prerequisitos
 
 - Java 17 o superior
-- Gradle 7.x o superior
+- Gradle 8.5 o superior (opcional, incluye wrapper)
 
 ## 🔧 Instalación
 
-1. Clona el repositorio:
+1. **Clonar el repositorio**
 ```bash
-git clone https://github.com/tu-usuario/sistema-inventario.git
+git clone https://github.com/bedaniele0/sistema-inventario.git
 cd sistema-inventario
 ```
 
-2. Ejecuta la aplicación:
+2. **Ejecutar la aplicación**
 ```bash
 ./gradlew bootRun
 ```
 
-La aplicación estará disponible en `http://localhost:8080`
+3. **Acceder a la aplicación**
+- API Base: http://localhost:8080
+- Swagger UI: http://localhost:8080/swagger-ui.html
+- H2 Console: http://localhost:8080/h2-console
 
-## 📡 API Endpoints
+## 📚 Documentación API
 
-### Información de la API
-```
-GET /api/
-```
-
-### Productos
+### Endpoints Principales
 
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
@@ -62,113 +84,105 @@ GET /api/
 | POST | `/api/productos` | Crear nuevo producto |
 | PUT | `/api/productos/{id}` | Actualizar producto |
 | DELETE | `/api/productos/{id}` | Eliminar producto |
-| GET | `/api/productos/buscar?q={termino}` | Buscar productos |
+| GET | `/api/productos/buscar` | Buscar productos |
 | GET | `/api/productos/bajo-stock` | Productos con stock bajo |
+| GET | `/api/dashboard/metricas` | Métricas del dashboard |
 
-### Dashboard
-```
-GET /api/dashboard
-```
+### Ejemplo de Request/Response
 
-## 💾 Base de Datos
-
-### Acceso a H2 Console
-- URL: `http://localhost:8080/h2-console`
-- JDBC URL: `jdbc:h2:mem:inventariodb`
-- Usuario: `sa`
-- Contraseña: (vacío)
-
-### Esquema de Producto
-
-```java
+**POST** `/api/productos`
+```json
 {
-  "id": 1,
-  "codigo": "PROD001",
-  "nombre": "Laptop Dell Inspiron",
-  "descripcion": "Laptop para desarrollo",
-  "precio": 15000.00,
-  "stock": 10,
-  "stockMinimo": 3,
-  "categoria": "Electrónica",
-  "activo": true,
-  "fechaCreacion": "2025-08-21T12:00:00",
-  "fechaActualizacion": "2025-08-21T12:00:00"
+  "nombre": "Laptop Dell XPS",
+  "descripcion": "Laptop de alto rendimiento",
+  "precio": 25999.99,
+  "stock": 15,
+  "stockMinimo": 5,
+  "categoria": "Electrónica"
 }
 ```
 
-## 🧪 Ejemplos de Uso
+**Response**
+```json
+{
+  "id": 1,
+  "nombre": "Laptop Dell XPS",
+  "descripcion": "Laptop de alto rendimiento",
+  "precio": 25999.99,
+  "stock": 15,
+  "stockMinimo": 5,
+  "categoria": "Electrónica",
+  "fechaCreacion": "2025-08-21T10:30:00",
+  "fechaActualizacion": "2025-08-21T10:30:00"
+}
+```
 
-### Crear un producto
+## 🗄️ Base de Datos
+
+### H2 Console Access
+- **URL:** `jdbc:h2:mem:inventariodb`
+- **Usuario:** `sa`
+- **Password:** (dejar en blanco)
+
+### Datos de Ejemplo
+El sistema incluye datos de prueba que se cargan automáticamente:
+- 4 categorías predefinidas
+- 10 productos de ejemplo
+- Configuración de alertas
+
+## 🧪 Testing
+
 ```bash
-curl -X POST http://localhost:8080/api/productos \
-  -H "Content-Type: application/json" \
-  -d '{
-    "codigo": "TABLET001",
-    "nombre": "iPad Pro",
-    "descripcion": "Tablet profesional",
-    "precio": 25000.00,
-    "stock": 5,
-    "stockMinimo": 2,
-    "categoria": "Electrónica"
-  }'
+# Ejecutar tests
+./gradlew test
+
+# Generar reporte de cobertura
+./gradlew jacocoTestReport
 ```
 
-### Buscar productos
-```bash
-curl http://localhost:8080/api/productos/buscar?q=laptop
+## 📦 Deployment
+
+### Docker (Próximamente)
+```dockerfile
+FROM openjdk:17-jdk-slim
+COPY build/libs/*.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
 ```
 
-### Ver dashboard
-```bash
-curl http://localhost:8080/api/dashboard
+### Variables de Entorno
+```properties
+# Producción con PostgreSQL
+SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/inventario
+SPRING_DATASOURCE_USERNAME=usuario
+SPRING_DATASOURCE_PASSWORD=password
 ```
 
-## 📊 Estructura del Proyecto
+## 🤝 Contribuciones
 
-```
-sistema-inventario/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/miempresa/inventario/
-│   │   │       ├── config/
-│   │   │       │   └── DataInitializer.java
-│   │   │       ├── controller/
-│   │   │       │   └── ProductoController.java
-│   │   │       ├── dto/
-│   │   │       │   └── ProductoDTO.java
-│   │   │       ├── entity/
-│   │   │       │   └── Producto.java
-│   │   │       ├── repository/
-│   │   │       │   └── ProductoRepository.java
-│   │   │       ├── service/
-│   │   │       │   └── ProductoService.java
-│   │   │       └── SistemaInventarioApplication.java
-│   │   └── resources/
-│   │       └── application.properties
-│   └── test/
-└── build.gradle
-```
+Las contribuciones son bienvenidas! Por favor:
 
-## 🚀 Próximas Mejoras
+1. Fork el proyecto
+2. Crea tu feature branch (`git checkout -b feature/NuevaCaracteristica`)
+3. Commit tus cambios (`git commit -m 'Agregar nueva característica'`)
+4. Push a la branch (`git push origin feature/NuevaCaracteristica`)
+5. Abre un Pull Request
 
-- [ ] Implementar autenticación JWT
-- [ ] Agregar paginación
-- [ ] Integrar con PostgreSQL para producción
-- [ ] Agregar Swagger UI para documentación
-- [ ] Implementar caché con Redis
-- [ ] Agregar tests unitarios e integración
+## 📝 Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
 
 ## 👨‍💻 Autor
 
 **Daniel Varela**
-- LinkedIn: [tu-perfil]
-- GitHub: [@tu-usuario]
+- GitHub: [@bedaniele0](https://github.com/bedaniele0)
+- LinkedIn: [Tu LinkedIn](https://linkedin.com/in/tu-perfil)
 
-## 📄 Licencia
+## 🙏 Agradecimientos
 
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+- Spring Boot Documentation
+- Baeldung Tutorials
+- Stack Overflow Community
 
 ---
 
-⭐ Si este proyecto te fue útil, considera darle una estrella en GitHub!
+⭐ Si este proyecto te ha sido útil, considera darle una estrella!
